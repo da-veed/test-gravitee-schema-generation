@@ -6,9 +6,9 @@ openapi: 3.0.3
 paths:
   /pet:
     post:
-      description: This endpoint allows the user to create a new pet by sending a
-        JSON array in the request body. The response will contain a status code of
-        200 if the creation was successful. This endpoint falls under the 'pet' tag.
+      description: This endpoint allows you to add a new pet to the store by sending
+        a JSON array as the request body. The response will contain a JSON array with
+        a "200" status code indicating success. This endpoint is tagged as "pet".
       requestBody:
         content:
           application/json:
@@ -25,14 +25,60 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Create a new pet.
+      summary: Add a new pet to the store.
+      tags:
+      - pet
+    put:
+      description: This endpoint allows for updating a pet's information by sending
+        a JSON array in the request body and returns a 200 OK response with a JSON
+        array of the updated pet's information. This endpoint is part of the 'pet'
+        tag.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items: {}
+              nullable: false
+              type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Update a pet.
+      tags:
+      - pet
+  /pet/findByStatus:
+    get:
+      description: This endpoint returns a list of pets based on their status (e.g.
+        available, sold) which can be specified as a query parameter.
+      parameters:
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Find pets by status
       tags:
       - pet
   /pet/findByTags:
     get:
-      description: This endpoint retrieves a list of pets that have been tagged with
-        the specified keywords. It allows searching for multiple tags at once by separating
-        them with a comma. If no tags are specified, it returns all pets.
+      description: This endpoint allows you to search for pets based on one or more
+        tags. Simply provide one or more tags as a query parameter and the endpoint
+        will return an array of pets that have the specified tag(s).
       parameters:
       - in: query
         name: tags
@@ -52,10 +98,25 @@ paths:
       tags:
       - pet
   /pet/{pet}:
+    delete:
+      description: This endpoint allows you to delete a specific pet by providing
+        its unique ID number in the URL path parameter. The server will respond with
+        a 204 No Content status code upon successful deletion.
+      parameters:
+      - in: path
+        name: pet
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No content
+      summary: Delete a pet
+      tags:
+      - pet
     get:
-      description: This endpoint allows users to retrieve information about a specific
-        pet by providing the pet ID as a parameter in the path. The response will
-        contain an array with detailed information about the pet.
+      description: This endpoint retrieves a pet by its unique ID specified in the
+        path parameter. The response includes a JSON array containing the pet information.
       parameters:
       - in: path
         name: pet
@@ -71,8 +132,61 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Retrieve information about a specific pet.
+      summary: Get pet by ID
       tags:
       - pet
+  /store/{store}:
+    post:
+      description: This endpoint allows the creation of a new store by sending a POST
+        request with a JSON array containing the required fields in the request body.
+        The endpoint returns a JSON array as a response, indicating that the store
+        has been successfully created.
+      parameters:
+      - in: path
+        name: store
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items: {}
+              nullable: false
+              type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Create a new store.
+      tags:
+      - store
+  /store/{store}/778:
+    get:
+      description: This endpoint retrieves information related to store 778, including
+        its details, inventory, and other relevant data.
+      parameters:
+      - in: path
+        name: store
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Get store 778 information
+      tags:
+      - store
 servers:
 - url: https://petstore3.swagger.io/api/v3
