@@ -6,9 +6,9 @@ openapi: 3.0.3
 paths:
   /pet:
     post:
-      description: This endpoint allows the user to create a new pet by sending a
-        JSON array in the request body. The response will contain a status code of
-        200 if the creation was successful. This endpoint falls under the 'pet' tag.
+      description: This endpoint allows the user to add a new pet to the store by
+        sending a JSON array in the request body. The response will be a 200 status
+        code with a JSON array indicating that the operation was successful.
       requestBody:
         content:
           application/json:
@@ -25,14 +25,14 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Create a new pet.
+      summary: Add a new pet to the store.
       tags:
       - pet
   /pet/findByTags:
     get:
-      description: This endpoint retrieves a list of pets that have been tagged with
-        the specified keywords. It allows searching for multiple tags at once by separating
-        them with a comma. If no tags are specified, it returns all pets.
+      description: This endpoint allows searching for pets that have been tagged with
+        specific keywords. Returns an array of pet objects matching the specified
+        tags.
       parameters:
       - in: query
         name: tags
@@ -53,9 +53,10 @@ paths:
       - pet
   /pet/{pet}:
     get:
-      description: This endpoint allows users to retrieve information about a specific
-        pet by providing the pet ID as a parameter in the path. The response will
-        contain an array with detailed information about the pet.
+      description: This endpoint retrieves a specific pet by ID from the server. It
+        requires an integer value for the pet ID in the path parameter and returns
+        an array of pet objects in JSON format if the ID is found in the server's
+        database.
       parameters:
       - in: path
         name: pet
@@ -71,7 +72,7 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Retrieve information about a specific pet.
+      summary: Get pet by ID
       tags:
       - pet
 servers:
