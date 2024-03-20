@@ -6,9 +6,9 @@ openapi: 3.0.3
 paths:
   /pet:
     post:
-      description: This endpoint allows the user to create a new pet by sending a
-        JSON array in the request body. The response will contain a status code of
-        200 if the creation was successful. This endpoint falls under the 'pet' tag.
+      description: This endpoint allows you to add a new pet to the store by providing
+        a JSON object in the request body, and returns a success message with a JSON
+        array of the added pet's details. This endpoint is tagged as 'pet'.
       requestBody:
         content:
           application/json:
@@ -25,17 +25,39 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Create a new pet.
+      summary: Add a new pet to the store.
       tags:
       - pet
-  /pet/findByTags:
+    put:
+      description: This endpoint allows you to update a pet's information by sending
+        a JSON array in the request body. The response will be a JSON array indicating
+        that the update was successful. The endpoint is tagged as 'pet'.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items: {}
+              nullable: false
+              type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Update a pet.
+      tags:
+      - pet
+  /pet/findByStatus:
     get:
-      description: This endpoint retrieves a list of pets that have been tagged with
-        the specified keywords. It allows searching for multiple tags at once by separating
-        them with a comma. If no tags are specified, it returns all pets.
+      description: This endpoint retrieves a list of pets based on the provided status
+        query parameter. The response is an array of pet objects.
       parameters:
       - in: query
-        name: tags
+        name: status
         required: false
         schema:
           type: string
@@ -48,14 +70,14 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Find pets by tags
+      summary: Find pets by status
       tags:
       - pet
   /pet/{pet}:
     get:
-      description: This endpoint allows users to retrieve information about a specific
-        pet by providing the pet ID as a parameter in the path. The response will
-        contain an array with detailed information about the pet.
+      description: This endpoint retrieves an array of pets based on their ID number
+        passed in the path parameter. The response will contain a list of pets represented
+        in a JSON format.
       parameters:
       - in: path
         name: pet
@@ -71,8 +93,39 @@ paths:
                 nullable: false
                 type: array
           description: OK
-      summary: Retrieve information about a specific pet.
+      summary: Get a list of pets by ID.
       tags:
       - pet
+  /store/{store}:
+    post:
+      description: This endpoint creates a new record in the specified store using
+        the provided JSON array as the request body and returns the same array as
+        the response body if successful. The store name is provided as a required
+        parameter in the path.
+      parameters:
+      - in: path
+        name: store
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items: {}
+              nullable: false
+              type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items: {}
+                nullable: false
+                type: array
+          description: OK
+      summary: Create a new record in the specified store.
+      tags:
+      - store
 servers:
 - url: https://petstore3.swagger.io/api/v3
